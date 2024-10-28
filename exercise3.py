@@ -25,13 +25,12 @@ class Rectangle:
     def upper_right(self) -> Point2D:
         return self.corner(3)
 
-    # def contains(self, point: Point2D, tolerance: float = 0.0) -> bool: # Task B
-    def contains(self, point: Point2D) -> bool:
+    def contains(self, point: Point2D, tolerance: float = 0.0) -> bool: # Task B
         # Task A: remove duplication by defining a function
         #         that checks if a value is within an interval
         #         and reuse that here.
-        return self.is_in_interval(point.x, self._lower_left.x, self._lower_left.x + self._dx) \
-            and self.is_in_interval(point.y, self._lower_left.y, self._lower_left.y + self._dy)
+        return self.is_in_interval(point.x, self._lower_left.x, self._lower_left.x + self._dx, tolerance) \
+            and self.is_in_interval(point.y, self._lower_left.y, self._lower_left.y + self._dy, tolerance)
 
     def _is_idx_on_upper_edge(self, i: int) -> bool:
         return i in [2, 3]
@@ -39,8 +38,8 @@ class Rectangle:
     def _is_idx_on_right_edge(self, i: int) -> bool:
         return i in [1, 3]
 
-    def is_in_interval(self, value: float, min:float, max:float) -> bool:
-        return min <= value <= max
+    def is_in_interval(self, value: float, min:float, max:float, tolerance:float=0.0) -> bool:
+        return min - tolerance <= value <= max + tolerance
 
 
 def test_rectangle_contains_exact() -> None:
